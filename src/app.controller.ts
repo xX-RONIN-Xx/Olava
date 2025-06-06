@@ -1,11 +1,11 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller("proveedores")//trabaja sobre la ruta base
+@Controller()//trabaja sobre la ruta base
 export class AppController {
   constructor(private readonly appService: AppService) {}
-
-  @Get("nuevos")
+/*
+  @Get()
   getTracks(): string {
     return this.appService.getTracks();
   }
