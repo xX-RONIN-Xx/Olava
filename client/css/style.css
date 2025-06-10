@@ -27,3 +27,39 @@ body {
     color: #007bff;
   }
   
+
+  .lista-canciones{
+    padding-left: 2rem;
+  }
+
+  .lista-canciones > li{
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  .lista-canciones ul{
+    padding-left: 20px;
+  }
+
+  .lista-canciones ul li{
+    list-style-type: disc;
+  }
+
+  .formulario{
+  
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5)
+  }
+
+  .formulario input{
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid grey;
+    font-size: 18px;  
+  }
+
+

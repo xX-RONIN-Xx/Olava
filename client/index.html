@@ -1,25 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <title>Page 2</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <script src="js/script.js"></script>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Page 2</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/script.js"></script>
+  </head>
+  <body>
     <header>
-        <nav>
-          <ul>
-            <li><a href="/index.html">Home</a></li>
-            <li><a href="/productos.html">Productos</a></li>
-            <li><a href="/contacto.html">Contacto</a></li>
-          </ul>
-        </nav>
+      <nav>
+        <ul>
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/productos.html">Productos</a></li>
+          <li><a href="/contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
     </header>
-    <button id="buscarDatos">Consultar BD</button>
+
+    <button id="obtenerDatos">Consultar BD</button>
+    <div id="api"></div>
 
     <h1>Mensaje del backend:</h1>
+    <ol id="lista-canciones" class="lista-canciones"></ol>
+    <div id="resultado"></div>
 
 
-</body>
-</html> 
+    <form id="form-cancion" class="formulario">
+      <label>
+        Titulo:
+        <input type="text" id="titulo" required>
+      </label>
+      <label>
+        Duracion (ens egundos)
+        <input type="number" id="duracion" required>
+      </label>
+      <label>
+        Artista:
+        <input type="text" id="artista" required>
+      </label>
+      <button type="submit">Agregar cancion</button> 
+
+
+
+    </form>
+
+  </body>
+</html>
