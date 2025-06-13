@@ -5,25 +5,36 @@ const BASE_URL = 'http://localhost:3030/tracks/';
 @Injectable()
 export class TrackService {
 
-  async updateTrackById(id:number, body: Track) : Promise<Track | undefined> {
-    const isTrack =await this.getTrackById(id);
-    if (!Object.keys(isTrack).length) return;
-    const updateTrack = {...body, id};
+  async updateTrackById(id: number, body: Track): Promise<Track | undefined> {
+
+    const isTrack: Track | undefined = await this.getTrackById(id);
+
+    if(!isTrack || !Object.keys(isTrack).length){
+      console.warn(`El track de id ${id} no existe`)
+      return;
+    }
+
+    const updateTrack = { ...body, id };
     console.log('Pista actualizada', updateTrack.title);
 
-    const res = await fetch(BASE_URL + id , {
+    const res = await fetch(BASE_URL + id, {
       method: 'PUT',
       headers: {
-         'Content-Type' : 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(updateTrack),
     });
-    const parsed = await res.json();
-    return parsed
-    
+
+    if(!res.ok) {
+      console.log('no se pudo actualizar')
+      return;
+    }
+    // const parsed = await res.json();
+    // return parsed
+
   }
 
-  async deleteTrackById(id:number): Promise<Track> {
+  async deleteTrackById(id: number): Promise<Track> {
     const res = await fetch(BASE_URL + id, {
       method: 'DELETE',
     });
@@ -53,15 +64,25 @@ export class TrackService {
 
   private async setId(): Promise<number> {
     const tracks = await this.getTracks();
-    const id : number = tracks[tracks.length - 1].id + 1;
+    const id: number = tracks[tracks.length - 1].id + 1;
     //=tracks[2]
     return id; //4
   }
 
-  async getTrackById(id: number): Promise<Track> {
-    const res = await fetch(BASE_URL+id);
-    const parsed = await res.json();
-    return parsed;
+  async getTrackById(id: number): Promise<Track | undefined> {
+    const res = await fetch(BASE_URL + id);
+    console.log("Estado: " + res.status)
+
+    if(!res.ok){
+      return undefined
+    }
+
+    try {
+      return await res.json();
+    } catch (err) {
+      console.log( err)
+      return undefined;
+    }
   }
 
   async getTracks(): Promise<Track[]> {
