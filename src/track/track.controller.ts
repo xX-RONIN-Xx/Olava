@@ -5,7 +5,7 @@ import { error } from 'console';
 
 @Controller('track')
 export class TrackController {
-  constructor(private readonly trackService: TrackService) {}
+  constructor(private readonly trackService: TrackService) { }
 
   @Get()
   getTracks(): Promise<Track[]> {
@@ -13,23 +13,17 @@ export class TrackController {
   }
 
   @Get(':id')
-  async getTrackById(@Res() response,  @Param('id') id: number): Promise<Track> {
-    const responseFormService = await this.trackService.getTrackById(id);
-
-    if (responseFormService && Object.keys(responseFormService).length) {
-      return response.status(HttpStatus.OK).json(responseFormService);
-    } else {
-      return response.status(HttpStatus.NOT_FOUND).json({error: 'No se encontró el recurso en la BD'})
-    }
+  getTrackById(@Param('id') id: number): Promise<Track | undefined> {
+    return this.trackService.getTrackById(id);
   }
 
   @Post()
-  createTrack(@Body() body:Track): Promise<Track> {
+  createTrack(@Body() body: Track): Promise<Track> {
     return this.trackService.createTrack(body);
-    }
+  }
 
   @Delete(':id')
-  deleteTrackById(@Param('id') id:number) : Promise<Track> {
+  deleteTrackById(@Param('id') id: number): Promise<Track> {
     return this.trackService.deleteTrackById(id);
   }
 
@@ -38,5 +32,5 @@ export class TrackController {
   updateTrackById(@Param('id') id: number, @Body() body: Track) {
     return this.trackService.updateTrackById(id, body);
   }
-    
+
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Track } from './track.interface';
 
 const BASE_URL = 'http://localhost:3030/tracks/';
@@ -9,7 +9,7 @@ export class TrackService {
 
     const isTrack: Track | undefined = await this.getTrackById(id);
 
-    if(!isTrack || !Object.keys(isTrack).length){
+    if (!isTrack || !Object.keys(isTrack).length) {
       console.warn(`El track de id ${id} no existe`)
       return;
     }
@@ -25,7 +25,7 @@ export class TrackService {
       body: JSON.stringify(updateTrack),
     });
 
-    if(!res.ok) {
+    if (!res.ok) {
       console.log('no se pudo actualizar')
       return;
     }
@@ -71,17 +71,14 @@ export class TrackService {
 
   async getTrackById(id: number): Promise<Track | undefined> {
     const res = await fetch(BASE_URL + id);
-    console.log("Estado: " + res.status)
-
-    if(!res.ok){
-      return undefined
-    }
 
     try {
-      return await res.json();
+      const parsed = await res.json();
+      if (Object.keys(parsed).length) return parsed;
+
     } catch (err) {
-      console.log( err)
-      return undefined;
+      console.log(err)
+      throw new NotFoundException('no se encontro el recurso');
     }
   }
 
